@@ -6,6 +6,7 @@
     python -m briefing run --until curate       # só coleta + curadoria (sem LLM)
     python -m briefing login valor              # abre navegador p/ logar e salvar cookies
     python -m briefing test-delivery            # manda um "ping" no WhatsApp
+    python -m briefing test-delivery --sample   # manda texto + 2 PDFs + 3 áudios de exemplo (sem LLM)
 """
 
 from __future__ import annotations
@@ -31,7 +32,9 @@ def main(argv: list[str] | None = None) -> None:
     lg = sub.add_parser("login")
     lg.add_argument("source", choices=["valor", "ft", "nyt", "wsj"])
 
-    sub.add_parser("test-delivery")
+    td = sub.add_parser("test-delivery")
+    td.add_argument("--sample", action="store_true",
+                    help="envia o conjunto de exemplo completo (texto + 2 PDFs + 3 áudios) em vez de um ping")
 
     a = p.parse_args(argv)
     if a.cmd == "run":
@@ -42,8 +45,13 @@ def main(argv: list[str] | None = None) -> None:
         from .ingest.browser import interactive_login
         interactive_login(a.source)
     elif a.cmd == "test-delivery":
-        from .deliver import ping
-        ping()
+        if a.sample:
+            from .config import load_settings
+            from .deliver import send_sample
+            send_sample(load_settings())
+        else:
+            from .deliver import ping
+            ping()
 
 
 if __name__ == "__main__":

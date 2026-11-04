@@ -31,6 +31,7 @@ python -m briefing run --until curate  # só coleta + curadoria (sem LLM, sem cu
 python -m briefing login valor         # 1x: abre o navegador, você loga no Globo, cookies ficam em browser_profile/
 python -m briefing run --dry-run       # coleta → curadoria → síntese → PDFs/áudios em output/<dia>/ (sem enviar)
 python -m briefing test-delivery       # "ping" no WhatsApp/Telegram
+python -m briefing test-delivery --sample   # texto + 2 PDFs + 3 áudios de exemplo: prova o canal sem gastar LLM
 python -m briefing run                 # pipeline completo
 python -m briefing run --from render   # retoma de uma etapa sem recoletar/pagar LLM
 ```
@@ -38,6 +39,15 @@ python -m briefing run --from render   # retoma de uma etapa sem recoletar/pagar
 Estado em 4/11/2026: ambiente instalado, coleta real e curadoria validadas, render (PDF + áudio) validado com dados fictícios em `output/preview/exemplo/`. Falta só o que depende de credenciais suas: chave da Anthropic, login no Valor e canal de entrega (ver checklist em `docs/07-roadmap.md`).
 
 Agendamento no Mac: `scripts/com.jornal.briefing.plist` (launchd, seg–sex 06:30). Em VPS: cron chamando `scripts/run_daily.sh`.
+
+### Como provar a entrega no WhatsApp antes de pagar qualquer API
+
+1. `python scripts/preview_pdf.py --audio` gera em `output/preview/exemplo/` o conjunto fictício completo (2 PDFs + 3 notas de voz, TTS grátis).
+2. `DELIVERY_PROVIDER=console python -m briefing test-delivery --sample` mostra no terminal a sequência exata que seria enviada.
+3. Canal real, uma das duas rotas:
+   - **WhatsApp via WAHA** (padrão): Docker na máquina (`brew install colima docker && colima start`, ou Docker Desktop/OrbStack), `WAHA_API_KEY` e `WHATSAPP_TO` no `.env`, `scripts/waha_up.sh`, ler o QR em `http://localhost:3000` com o **chip reserva**, depois `python -m briefing test-delivery --sample`. Os arquivos chegam no seu número principal como mensagens do chip reserva.
+   - **Telegram** (zero risco, 10 min): criar bot no @BotFather, mandar "oi" para ele, pegar o `chat_id` em `https://api.telegram.org/bot<TOKEN>/getUpdates`, `DELIVERY_PROVIDER=telegram` no `.env`, `python -m briefing test-delivery --sample`.
+4. Com o canal provado, a chave da Anthropic é o último elo: `python -m briefing run --dry-run` gera o briefing real e `python -m briefing run` envia.
 
 ## Estrutura
 
