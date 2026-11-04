@@ -1,0 +1,38 @@
+[
+  {
+    "channel": "mercado_empresas",
+    "date": "2026-01-01",
+    "opening": "Bom dia. Este é o áudio de Mercado e Empresas do seu briefing. EXEMPLO FICTÍCIO para teste de voz.",
+    "segments": [
+      "Começando pelo mercado: a Bolsa caiu um vírgula quatro por cento ontem, o dólar rondou os cinco reais e cinquenta e a curva de juros subiu em toda a extensão, com o mercado reagindo à decisão do Banco Central de manter a Selic.",
+      "Em empresas, a Cia Exemplo Saneamento convocou assembleia de debenturistas para deliberar sobre a dispensa temporária de um covenant financeiro. A reunião está marcada para daqui a cinco dias.",
+      "No setor de telecomunicações, a possível venda de uma operadora agitou o pregão e as ações subiram quase seis por cento.",
+      "E para fechar, a temporada de resultados segue forte: a Exemplo Varejo reportou lucro acima do esperado e anunciou um programa de recompra."
+    ],
+    "closing": "Esse foi o resumo de mercado e empresas. Os detalhes estão no PDF. Até o próximo áudio."
+  },
+  {
+    "channel": "economia",
+    "date": "2026-01-01",
+    "opening": "Agora, Economia. EXEMPLO FICTÍCIO para teste de voz.",
+    "segments": [
+      "O Banco Central manteve a Selic em treze vírgula setenta e cinco por cento ao ano, interrompendo uma sequência de cinco cortes. O comunicado citou a inflação de serviços e a incerteza fiscal.",
+      "O boletim Focus reduziu a projeção de crescimento do PIB deste ano de um vírgula oito para um vírgula setenta e seis por cento.",
+      "No fiscal, o Tesouro indicou que o risco diminuiu em relação ao ano passado, mas segue elevado, segundo relatório divulgado ontem.",
+      "E na pauta tributária, cresce a pressão política por mudanças na regulamentação da reforma, com votação prevista para as próximas semanas."
+    ],
+    "closing": "Esse foi o resumo de economia."
+  },
+  {
+    "channel": "politica",
+    "date": "2026-01-01",
+    "opening": "Por fim, Política. EXEMPLO FICTÍCIO para teste de voz.",
+    "segments": [
+      "O Senado aprovou a PEC da Segurança Pública, que agora segue para a Câmara. O texto amplia a coordenação federal sobre as polícias estaduais.",
+      "O governo poderá renovar todos os diretores das doze agências reguladoras até o fim do mandato, segundo levantamento do jornal.",
+      "Nos Estados Unidos, a oposição conquistou maioria nas duas casas do Congresso nas eleições de meio de mandato, e líderes mundiais reagiram ao resultado.",
+      "E a Justiça proibiu uma grande empresa de tecnologia de usar conteúdo de usuários para treinar inteligência artificial sem autorização."
+    ],
+    "closing": "Esse foi o briefing de hoje. Bom dia e bons negócios."
+  }
+]

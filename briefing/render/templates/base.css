@@ -1,0 +1,67 @@
+/* Base visual dos PDFs.
+   Padrão: página em formato de CELULAR (420×760 pt ≈ proporção de tela), corpo 14 pt,
+   uma coluna. O WhatsApp mostra a página 1 como miniatura e abre o PDF ajustado à
+   largura da tela: em A4 o texto de 11 pt vira ~7 px; neste formato vira ~15 px.
+   settings.pdf.page_size = "A4" troca para duas colunas em A4 (override no template). */
+@page { size: 420pt 760pt; margin: 18pt 16pt 26pt 16pt;
+  @bottom-left { content: "Briefing privado · uso pessoal · fontes citadas em cada card"; font: 8pt "Inter", sans-serif; color: #888; }
+  @bottom-right { content: counter(page) " / " counter(pages); font: 8pt "Inter", sans-serif; color: #888; } }
+:root { --ink: #14181f; --muted: #5b6472; --line: #e3e6ea; --bg: #ffffff; --card: #f6f7f9;
+  --accent: #0b4f9c; --pos: #1b7f4e; --neg: #b3261e; --neu: #6b7280; --hot: #d9480f; --warm: #e8a317; --cold: #2b6cb0; }
+* { box-sizing: border-box; }
+body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; font-size: 14pt; line-height: 1.4; color: var(--ink); background: var(--bg); margin: 0; }
+h1 { font-size: 24pt; margin: 0 0 2mm; letter-spacing: -0.3pt; white-space: nowrap; }
+h2 { font-size: 17pt; margin: 0 0 4mm; padding-bottom: 1.5mm; border-bottom: 2px solid var(--ink); break-after: avoid; }
+h3 { font-size: 15pt; margin: 0 0 1.5mm; line-height: 1.25; }
+p { margin: 0 0 1.5mm; }
+a { color: var(--accent); text-decoration: none; }
+.muted { color: var(--muted); font-size: 11pt; }
+/* celular: seções fluem (sem meia página em branco); A4: uma seção por página */
+.page { break-after: auto; }
+body.a4 .page { break-after: page; }
+body.a4 .page:last-child { break-after: auto; }
+.page h2 { margin-top: 5mm; }
+.header { display: flex; justify-content: space-between; align-items: baseline; gap: 6mm; border-bottom: 3px solid var(--ink); padding-bottom: 2mm; margin-bottom: 5mm; }
+.header .date { font-size: 11pt; color: var(--muted); }
+.phrase { font-size: 16pt; font-weight: 600; margin: 0 0 5mm; color: var(--accent); }
+.grid { display: block; }
+.grid > .card { width: 100%; margin-bottom: 4mm; }
+body.a4 .grid { display: flex; flex-wrap: wrap; gap: 4mm; }
+body.a4 .grid > .card { width: calc(50% - 2mm); margin-bottom: 0; }
+.card { background: var(--card); border-radius: 3mm; padding: 4mm; break-inside: avoid; border-left: 3px solid var(--neu); }
+.card.alto { border-left-color: var(--neg); }
+.card.medio { border-left-color: var(--warm); }
+.card.baixo { border-left-color: var(--neu); }
+.card.hero { display: block; width: 100%; background: var(--ink); color: #fff; border-left: 0; margin-bottom: 5mm; }
+.card.hero h3 { font-size: 19pt; }
+.card.hero a, .card.hero .muted { color: #cfd6e0; }
+.why { font-weight: 600; margin-top: 1.5mm; }
+.why::before { content: "Por que importa · "; color: var(--accent); font-weight: 700; }
+.card.hero .why::before { color: #8ec5ff; }
+.bridge::before { content: "Brasil · "; color: var(--accent); font-weight: 700; }
+.tags { margin-top: 1.5mm; }
+.tag { display: inline-block; font-size: 10pt; padding: 0.5mm 2mm; border-radius: 2mm; background: #fff; border: 1px solid var(--line); margin-right: 1mm; color: var(--muted); }
+.dir { font-weight: 700; }
+.dir.positivo { color: var(--pos); } .dir.negativo { color: var(--neg); } .dir.neutro { color: var(--neu); }
+.bullets { padding-left: 5mm; margin: 0 0 4mm; }
+.bullets li { margin-bottom: 1.2mm; }
+.read { background: #fff8e6; border: 1px solid #f1d58a; border-radius: 3mm; padding: 4mm; break-inside: avoid; }
+.read h2 { border-color: #e8a317; }
+.read li { margin-bottom: 2.5mm; list-style: none; }
+.read .title { font-weight: 700; }
+table { width: 100%; border-collapse: collapse; font-size: 11pt; }
+tr { break-inside: avoid; }
+th, td { text-align: left; padding: 1.5mm 2mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; font-size: 9.5pt; text-transform: uppercase; letter-spacing: .3pt; }
+/* Termômetro */
+.thermo { display: flex; align-items: center; gap: 6mm; margin-bottom: 5mm; }
+.thermo .value { font-size: 44pt; font-weight: 800; line-height: 1; }
+.thermo.fervendo .value, .thermo.quente .value { color: var(--hot); } .thermo.aquecendo .value, .thermo.morno .value { color: var(--warm); } .thermo.frio .value { color: var(--cold); }
+.score-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 3mm; }
+.score { font-weight: 800; font-size: 18pt; line-height: 1; padding: 1mm 2mm; border-radius: 2mm; background: #fff; border: 1px solid var(--line); }
+.score.fervendo, .score.quente { color: var(--hot); } .score.aquecendo, .score.morno { color: var(--warm); } .score.frio { color: var(--cold); }
+.bar { height: 4mm; background: linear-gradient(90deg, var(--cold), var(--warm), var(--hot)); border-radius: 2mm; position: relative; flex: 1; }
+.bar i { position: absolute; top: -1.5mm; width: 2mm; height: 7mm; background: var(--ink); border-radius: 1mm; }
+.heat { letter-spacing: 1pt; color: var(--hot); }
+.evidence { font-style: italic; color: var(--muted); border-left: 2px solid var(--line); padding-left: 2mm; margin: 1.5mm 0; }
+.step::before { content: "Próximo passo · "; color: var(--accent); font-weight: 700; }

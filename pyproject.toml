@@ -1,0 +1,50 @@
+[project]
+name = "briefing"
+version = "0.1.0"
+description = "Briefing diário de notícias financeiras (PDF + áudio + Termômetro DCM) entregue no WhatsApp"
+requires-python = ">=3.11"
+dependencies = [
+  # LLM
+  "anthropic>=1.0",
+  "pydantic>=2.7",
+  # coleta
+  "feedparser>=6.0",
+  "requests>=2.32",
+  "beautifulsoup4>=4.12",
+  "trafilatura>=2.0",
+  "playwright>=1.47",
+  # curadoria
+  "rapidfuzz>=3.9",
+  # render
+  "jinja2>=3.1",
+  "weasyprint>=62",
+  "edge-tts>=6.1",
+  # config
+  "pyyaml>=6.0",
+  "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+tts-google = ["google-cloud-texttospeech>=2.17"]
+tts-premium = ["openai>=1.40", "elevenlabs>=1.5"]
+embeddings = ["sentence-transformers>=3.0"]
+dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.11"]
+
+[project.scripts]
+briefing = "briefing.cli:main"
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+ignore = ["BLE001"]   # coletores capturam Exception de propósito: uma fonte fora do ar não derruba o briefing
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.setuptools.packages.find]
+include = ["briefing*"]
+
+[tool.setuptools.package-data]
+briefing = ["summarize/prompts/*.md", "render/templates/*"]

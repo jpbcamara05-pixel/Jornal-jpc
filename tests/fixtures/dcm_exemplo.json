@@ -1,0 +1,179 @@
+{
+  "date": "2026-11-04",
+  "temperature": 71,
+  "temperature_label": "quente",
+  "temperature_rationale": "EXEMPLO FICTÍCIO · AGD com waiver em 16 dias (score 82) e capex de R$ 9 bi sem funding (score 62) puxam o dia; oferta incentivada anunciada corrobora apetite.",
+  "top_signals": [
+    {
+      "company": "Companhia Exemplo de Saneamento",
+      "sector": "Saneamento",
+      "economic_group": "Grupo Exemplo",
+      "opportunity": "consent_waiver",
+      "confidence": "alta",
+      "evidence": "convoca os debenturistas da 4ª emissão para AGD em 20/11/2026 para deliberar sobre a dispensa temporária do índice de cobertura",
+      "reading": "Pedido de waiver de covenant em curso; possível repactuação de taxa ou prêmio.",
+      "next_step": "Ler o edital da AGD e checar posição dos fundos; contato com RI antes de 20/11.",
+      "source_name": "CVM · IPE (AGDEB)",
+      "url": "https://valor.globo.com/legais/x",
+      "event_date": "2026-11-20",
+      "keywords_matched": [
+        "AGD",
+        "dispensa"
+      ],
+      "subtype": "waiver_covenant",
+      "instrument": "Debêntures 4ª emissão",
+      "amount_brl": null,
+      "source_type": "documento_oficial",
+      "parties": {
+        "agente_fiduciario": "Vórtx"
+      },
+      "id": "f6e5d4c3b2",
+      "score": 82,
+      "band": "fervendo",
+      "score_components": {
+        "base": 35,
+        "urgencia": 12,
+        "tamanho": 0,
+        "fonte": 15,
+        "corroboracao": 10,
+        "modificadores": 10
+      },
+      "corroborations": 2
+    },
+    {
+      "company": "Eletrobras",
+      "sector": "Energia elétrica",
+      "economic_group": null,
+      "opportunity": "gatilho_funding",
+      "confidence": "alta",
+      "evidence": "a estrutura de funding dos projetos de transmissão será definida ao longo de 2027",
+      "reading": "Capex de R$ 9 bi em ativos elegíveis a debênture incentivada, com funding em aberto.",
+      "next_step": "Mapear vencimentos 2027–2028 no SND e preparar proposta de incentivada por projeto.",
+      "source_name": "Brazil Journal",
+      "url": "https://braziljournal.com/m2",
+      "event_date": null,
+      "keywords_matched": [
+        "capex",
+        "funding"
+      ],
+      "subtype": "capex_projeto",
+      "instrument": null,
+      "amount_brl": 9000000000.0,
+      "source_type": "imprensa_principal",
+      "parties": {},
+      "id": "a1b2c3d4e5",
+      "score": 62,
+      "band": "quente",
+      "score_components": {
+        "base": 25,
+        "urgencia": 0,
+        "tamanho": 15,
+        "fonte": 10,
+        "corroboracao": 5,
+        "modificadores": 5
+      },
+      "corroborations": 1
+    },
+    {
+      "company": "Rede D'Or",
+      "sector": "Saúde",
+      "economic_group": null,
+      "opportunity": "gatilho_funding",
+      "confidence": "media",
+      "evidence": "a aquisição será paga com recursos de caixa e dívida",
+      "reading": "Aquisição de R$ 800 mi com parcela em dívida ainda não contratada → emissão de curto prazo provável.",
+      "next_step": "Propor nota comercial ou debênture bullet de 2–3 anos; checar limite de alavancagem nas escrituras vigentes.",
+      "source_name": "Valor",
+      "url": "https://valor.globo.com/m3",
+      "event_date": null,
+      "keywords_matched": [
+        "aquisição",
+        "dívida"
+      ],
+      "subtype": "aquisicao_mna",
+      "instrument": null,
+      "amount_brl": 800000000.0,
+      "source_type": "imprensa_principal",
+      "parties": {},
+      "id": "0a9b8c7d6e",
+      "score": 47,
+      "band": "aquecendo",
+      "score_components": {
+        "base": 25,
+        "urgencia": 0,
+        "tamanho": 10,
+        "fonte": 7,
+        "corroboracao": 0,
+        "modificadores": 5
+      },
+      "corroborations": 0
+    }
+  ],
+  "other_signals": [
+    {
+      "company": "Exemplo Logística",
+      "sector": "Logística",
+      "economic_group": null,
+      "opportunity": "evento_credito",
+      "confidence": "media",
+      "evidence": "a Fitch colocou o rating em observação negativa citando alavancagem acima de 4x",
+      "reading": "Rating em revisão pode acionar step-up ou covenant de rating.",
+      "next_step": "Verificar cláusulas de rating nas escrituras das emissões em circulação.",
+      "source_name": "Valor",
+      "url": "https://valor.globo.com/o1",
+      "event_date": null,
+      "keywords_matched": [
+        "rating",
+        "observação negativa"
+      ],
+      "subtype": "rebaixamento_rating",
+      "instrument": null,
+      "amount_brl": null,
+      "source_type": "imprensa_principal",
+      "parties": {
+        "rating": "Fitch"
+      },
+      "id": "5f4e3d2c1b",
+      "score": 37,
+      "band": "morno",
+      "score_components": {
+        "base": 20,
+        "urgencia": 0,
+        "tamanho": 0,
+        "fonte": 7,
+        "corroboracao": 5,
+        "modificadores": 5
+      },
+      "corroborations": 1
+    }
+  ],
+  "notices": [
+    {
+      "kind": "agd",
+      "company": "Companhia Exemplo de Saneamento",
+      "instrument": "Debêntures 4ª emissão",
+      "date": "2026-11-20",
+      "summary": "Dispensa temporária de covenant (ICSD)",
+      "source_name": "CVM · IPE",
+      "url": "https://valor.globo.com/legais/x"
+    },
+    {
+      "kind": "inicio_oferta",
+      "company": "Concessionária Exemplo",
+      "instrument": "Debêntures incentivadas 2ª emissão · R$ 1,2 bi",
+      "date": "2026-11-04",
+      "summary": "Anúncio de início de distribuição (rito automático, RCVM 160)",
+      "source_name": "Valor Legais",
+      "url": "https://valor.globo.com/legais/y"
+    }
+  ],
+  "credit_context": [
+    "Copom decide hoje; curva precifica ~60% de manutenção.",
+    "Captação líquida de fundos de crédito privado segue positiva em outubro, segundo a ANBIMA.",
+    "STF retoma julgamento sobre tributação de incentivadas."
+  ],
+  "upcoming_events": [
+    "20/11 — Companhia Exemplo de Saneamento — AGD 4ª emissão (waiver ICSD)",
+    "04/11 — Concessionária Exemplo — início de distribuição R$ 1,2 bi"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-04",
+  "edition_number": 1,
+  "phrase_of_the_day": "EXEMPLO FICTÍCIO · Copom no radar, fiscal pressiona a curva e bancos abrem a temporada de balanços",
+  "headline": {
+    "story_id": "h1", "title": "Copom decide hoje com mercado dividido entre pausa e alta de 25 pontos",
+    "summary": "Comitê encerra reunião nesta quarta. Curva de juros precifica cerca de 60% de chance de manutenção; dissidência no colegiado é vista como possível pela primeira vez no ciclo.",
+    "why_it_matters": "Define o custo de carregamento do crédito privado no fim do ano e o apetite por emissões em dezembro.",
+    "impact": "alto", "direction": "neutro", "tags": ["juros", "Copom", "macro"], "source_name": "Valor", "url": "https://valor.globo.com/exemplo"
+  },
+  "in_30_seconds": [
+    "Mercado: Ibovespa cai com bancos; dólar sobe com fiscal.",
+    "Economia: Copom decide hoje; produção industrial surpreende para cima.",
+    "Política: Câmara adia votação da LDO; relator sinaliza corte de emendas.",
+    "Internacional: Treasuries de 10 anos voltam a 4,5% após dado forte de emprego.",
+    "DCM: duas AGDs convocadas e uma oferta incentivada de R$ 1,2 bi anunciada."
+  ],
+  "read_today": [
+    {"story_id": "r1", "title": "Entrevista: o que o novo presidente da CVM quer mudar nas ofertas 160", "source_name": "Valor", "url": "https://valor.globo.com/exemplo2", "reading_minutes": 9,
+     "why_you_should_read": "Você vai lidar com o rito automático todos os dias; aqui estão as mudanças antes de virarem audiência pública."},
+    {"story_id": "r2", "title": "Análise: por que o spread das incentivadas parou de fechar", "source_name": "Brazil Journal", "url": "https://braziljournal.com/exemplo", "reading_minutes": 6,
+     "why_you_should_read": "Argumento de precificação que você pode usar em comitê esta semana."},
+    {"story_id": "r3", "title": "Big Read: the private credit boom meets its first real test", "source_name": "FT", "url": "https://ft.com/exemplo", "reading_minutes": 12,
+     "why_you_should_read": "O ciclo de crédito privado lá fora costuma chegar ao Brasil com 12 a 18 meses de atraso."}
+  ],
+  "mercado_empresas": [
+    {"story_id": "m1", "title": "Itaú lucra R$ 11 bi no trimestre e eleva guidance de carteira", "summary": "Resultado veio 4% acima do consenso, com inadimplência estável e margem financeira em alta. Banco revisou projeção de crescimento de carteira para o topo da faixa.", "why_it_matters": "Bancos com apetite ampliam concorrência com o mercado de capitais no crédito corporativo.", "impact": "alto", "direction": "positivo", "tags": ["bancos", "Itaú", "resultado"], "source_name": "Valor", "url": "https://valor.globo.com/m1"},
+    {"story_id": "m2", "title": "Eletrobras anuncia capex de R$ 9 bi em transmissão até 2028", "summary": "Plano apresentado a investidores prevê leilões e reforços de rede; companhia diz que estrutura de funding será definida ao longo de 2027.", "why_it_matters": "Capex sem funding definido é candidato natural a debênture incentivada.", "impact": "alto", "direction": "positivo", "tags": ["energia", "Eletrobras", "capex"], "source_name": "Brazil Journal", "url": "https://braziljournal.com/m2"},
+    {"story_id": "m3", "title": "Rede D'Or conclui compra de hospital em Salvador por R$ 800 mi", "summary": "Aquisição será paga em dinheiro com caixa e dívida; companhia não detalhou o instrumento.", "why_it_matters": "Pagamento com dívida abre espaço para emissão de curto prazo nos próximos meses.", "impact": "medio", "direction": "positivo", "tags": ["saúde", "M&A"], "source_name": "Valor", "url": "https://valor.globo.com/m3"},
+    {"story_id": "m4", "title": "Dólar sobe a R$ 5,45 com ruído fiscal e Treasuries", "summary": "Moeda americana avançou 0,8% em dia de aversão a risco global e nova rodada de ruído sobre a meta fiscal de 2027.", "why_it_matters": "Câmbio pressionado reduz espaço para corte de juros e encarece hedge de emissores com receita em real.", "impact": "medio", "direction": "negativo", "tags": ["câmbio", "macro"], "source_name": "Valor", "url": "https://valor.globo.com/m4"}
+  ],
+  "economia": [
+    {"story_id": "e1", "title": "Produção industrial sobe 1,2% em setembro e supera projeções", "summary": "Alta foi puxada por bens de capital; acumulado em 12 meses vai a 2,1%.", "why_it_matters": "Atividade mais forte reduz a chance de corte de juros no curto prazo.", "impact": "medio", "direction": "neutro", "tags": ["atividade", "IBGE"], "source_name": "Valor", "url": "https://valor.globo.com/e1"},
+    {"story_id": "e2", "title": "Tesouro vê déficit maior e discute contingenciamento adicional", "summary": "Relatório bimestral indica necessidade de bloqueio de R$ 8 bi para cumprir a meta.", "why_it_matters": "Prêmio de risco fiscal mantém a curva longa pressionada e encarece emissões prefixadas.", "impact": "alto", "direction": "negativo", "tags": ["fiscal"], "source_name": "Valor", "url": "https://valor.globo.com/e2"},
+    {"story_id": "e3", "title": "IPCA-15 desacelera, mas serviços seguem acima de 6%", "summary": "Índice veio em 0,25%, abaixo da mediana; núcleos mostram pouca melhora.", "why_it_matters": "Inflação de serviços resistente limita o Copom mesmo com headline melhor.", "impact": "medio", "direction": "neutro", "tags": ["inflação"], "source_name": "Valor", "url": "https://valor.globo.com/e3"}
+  ],
+  "politica": [
+    {"story_id": "p1", "title": "Câmara adia LDO e relator propõe corte de R$ 10 bi em emendas", "summary": "Votação ficou para a próxima semana após impasse sobre emendas de comissão.", "why_it_matters": "Sinal de ajuste fiscal pelo Congresso tende a ser bem recebido pela curva.", "impact": "medio", "direction": "positivo", "tags": ["Congresso", "fiscal"], "source_name": "Valor", "url": "https://valor.globo.com/p1"},
+    {"story_id": "p2", "title": "STF retoma julgamento sobre tributação de incentivadas", "summary": "Tema afeta a isenção de IR para pessoas físicas em debêntures de infraestrutura.", "why_it_matters": "Qualquer mudança na isenção altera a demanda de varejo e o custo das incentivadas.", "impact": "alto", "direction": "negativo", "tags": ["STF", "tributação", "incentivadas"], "source_name": "Valor", "url": "https://valor.globo.com/p2"}
+  ],
+  "internacional": [
+    {"story_id": "i1", "title": "Payroll forte leva Treasury de 10 anos de volta a 4,5%", "summary": "Criação de 230 mil vagas em outubro reduziu apostas em corte do Fed em dezembro.", "why_it_matters": "Juro longo americano mais alto drena fluxo de emergentes.", "brazil_bridge": "Pressão sobre o real e sobre a parte longa da curva de DI.", "impact": "alto", "direction": "negativo", "tags": ["Fed", "Treasuries"], "source_name": "WSJ", "url": "https://wsj.com/i1"},
+    {"story_id": "i2", "title": "Private credit funds face first wave of redemptions", "summary": "FT reports gating at two mid-size US funds after defaults in software loans.", "why_it_matters": "Ciclo de crédito privado global começa a mostrar estresse.", "brazil_bridge": "Fundos de crédito locais podem sofrer reprecificação por contágio de narrativa.", "impact": "medio", "direction": "negativo", "tags": ["crédito privado"], "source_name": "FT", "url": "https://ft.com/i2"},
+    {"story_id": "i3", "title": "China anuncia pacote de estímulo à construção civil", "summary": "Medidas incluem crédito subsidiado para incorporadoras estatais.", "why_it_matters": "Suporte ao minério e ao aço.", "brazil_bridge": "Positivo para Vale, CSN e receita de exportadoras.", "impact": "medio", "direction": "positivo", "tags": ["China", "commodities"], "source_name": "NYT", "url": "https://nytimes.com/i3"}
+  ],
+  "agenda_do_dia": ["18h30 · Decisão do Copom", "10h · Leilão de LTN/NTN-F do Tesouro", "Após o fechamento · Balanço do Bradesco"],
+  "sources_consulted": ["Valor", "Brazil Journal", "FT", "NYT", "WSJ"],
+  "articles_processed": 287
+}

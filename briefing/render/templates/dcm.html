@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Termômetro DCM {{ date }}</title>
+<link rel="stylesheet" href="base.css">
+<style>@page { size: {{ _page.css }}; }</style></head>
+<body class="{{ _page.cls }}">
+{% macro signal(s) -%}
+<div class="card {{ 'alto' if s.score >= 60 else ('medio' if s.score >= 40 else 'baixo') }}">
+  <div class="score-row"><h3>{{ s.company }} <span class="muted">· {{ s.sector }}{% if s.economic_group %} · {{ s.economic_group }}{% endif %}</span></h3>
+    <span class="score {{ s.band }}">{{ s.score }}</span></div>
+  <div class="tags"><span class="tag">{{ s.opportunity | replace('_',' ') }} · {{ s.subtype | replace('_',' ') }}</span><span class="tag heat">{{ '🔥' * s.heat }}</span>
+    <span class="tag">{{ s.band }}</span><span class="tag">fonte: {{ s.source_type | replace('_',' ') }} · {{ s.confidence }}</span>
+    {% if s.instrument %}<span class="tag">{{ s.instrument }}</span>{% endif %}
+    {% if s.event_date %}<span class="tag">{{ s.event_date }}</span>{% endif %}
+    {% if s.corroborations %}<span class="tag">+{{ s.corroborations }} fonte(s)</span>{% endif %}</div>
+  <p class="evidence">“{{ s.evidence }}” — <a href="{{ s.url }}">{{ s.source_name }}</a></p>
+  <p>{{ s.reading }}</p>
+  <p class="step">{{ s.next_step }}</p>
+</div>
+{%- endmacro %}
+
+<section class="page">
+  <div class="header"><h1>Termômetro DCM</h1><div class="date">{{ date | br_date }}</div></div>
+  <div class="thermo {{ temperature_label }}"><div class="value">{{ temperature }}</div>
+    <div style="flex:1"><div class="bar"><i style="left: {{ temperature }}%"></i></div>
+      <p style="margin-top:2mm"><b>{{ temperature_label | upper }}</b> · {{ temperature_rationale }}</p></div></div>
+  <h2>Top sinais do dia</h2>
+  <div class="grid">{% for s in top_signals %}{{ signal(s) }}{% endfor %}</div>
+  {% if notices %}<h2 style="margin-top:6mm">Avisos e editais</h2>
+  <table><tr><th>Tipo</th><th>Empresa</th><th>Instrumento</th><th>Data</th><th>Resumo</th></tr>
+    {% for n in notices %}<tr><td>{{ n.kind | replace('_',' ') }}</td><td>{{ n.company }}</td><td>{{ n.instrument or '—' }}</td><td>{{ n.date or '—' }}</td><td><a href="{{ n.url }}">{{ n.summary }}</a></td></tr>{% endfor %}
+  </table>{% endif %}
+</section>
+
+<section class="page">
+  <h2>Radar · outros sinais e semana</h2>
+  <div class="grid">{% for s in other_signals %}{{ signal(s) }}{% endfor %}</div>
+  {% if upcoming_events %}<h2 style="margin-top:6mm">Próximos eventos</h2><ul class="bullets">{% for e in upcoming_events %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+  {% if credit_context %}<h2 style="margin-top:6mm">Contexto de crédito</h2><ul class="bullets">{% for c in credit_context %}<li>{{ c }}</li>{% endfor %}</ul>{% endif %}
+  <p class="muted" style="margin-top:8mm">Score 0–100 = base do evento (0–40) + urgência (0–20) + tamanho (0–15) + confiança da fonte (0–15) + corroboração (0–10) ± modificadores. Bandas: frio &lt;20 · morno · aquecendo (≥40: vale olhar) · quente (≥60: contato na semana) · fervendo (≥80: hoje). Ferramenta de triagem: cada sinal exige validação humana. Pesos em config/dcm_signals.yaml.</p>
+</section>
+</body></html>

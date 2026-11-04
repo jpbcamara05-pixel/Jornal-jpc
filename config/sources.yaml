@@ -1,0 +1,151 @@
+# Feeds e páginas por veículo. URLs verificadas em 04/11/2026 (HTTP 200 + parse).
+# section_weights = proeminência base por editoria (0..1); a edição impressa do Valor
+# e as newsletters sobrescrevem para cima.
+
+valor:
+  # pox.globo.com é o host oficial dos feeds da Globo (valor.globo.com/rss → 404).
+  # <description> traz o texto integral nos artigos abertos (~50%) e só o subtítulo nos exclusivos p/ assinante.
+  feeds:
+    capa:          https://pox.globo.com/rss/valor/
+    empresas:      https://pox.globo.com/rss/valor/empresas/
+    financas:      https://pox.globo.com/rss/valor/financas/
+    brasil:        https://pox.globo.com/rss/valor/brasil/
+    politica:      https://pox.globo.com/rss/valor/politica/
+    mundo:         https://pox.globo.com/rss/valor/mundo/
+    legislacao:    https://pox.globo.com/rss/valor/legislacao/
+    agronegocios:  https://pox.globo.com/rss/valor/agronegocios/
+    opiniao:       https://pox.globo.com/rss/valor/opiniao/
+    pipeline:      https://pox.globo.com/rss/pipelinevalor/        # M&A/mercado de capitais, ~93% texto integral
+    valor_investe: https://pox.globo.com/rss/valorinveste/         # renda fixa, crédito privado, ~86% integral
+    valor_international: https://pox.globo.com/rss/valorinternational/  # inglês, 100% integral (útil p/ cluster PT×EN)
+  section_weights:
+    capa: 0.7
+    empresas: 0.5
+    financas: 0.5
+    brasil: 0.45
+    politica: 0.4
+    pipeline: 0.45
+    valor_investe: 0.35
+    legislacao: 0.3
+    mundo: 0.25
+    agronegocios: 0.25
+    opiniao: 0.3
+    valor_international: 0.2
+  # Manifesto público da edição impressa do dia (~70 matérias, server-rendered, sem login).
+  # É a melhor fonte de "o que o jornal escolheu destacar" → prominence 0.85 (1.0 p/ itens de capa).
+  impresso_url: https://valor.globo.com/impresso/{yyyymmdd}/
+  impresso_weight: 0.85
+  impresso_front_weight: 1.0
+  # Texto integral dos exclusivos: navegador logado (Conta Globo, cookie GLBID). Sem anti-bot no globo.com.
+  max_full_text: 60
+  login_url: https://login.globo.com/login/4728
+  # Prévias públicas das newsletters (sem e-mail): /newsletter/preview/?newsletter=<KEY>
+  newsletter_preview: https://valor.globo.com/newsletter/preview/?newsletter={key}
+  newsletter_keys: [ValorManha, ValorPolitica]   # "Edição de hoje" (diária) e "Política Hoje"
+
+brazil_journal:
+  feeds:
+    geral: https://braziljournal.com/feed        # 15 itens, content:encoded = texto integral; sem paywall
+  section_weights:
+    geral: 0.5
+
+ft:
+  # Qualquer seção/tópico + ?format=rss (25 itens, só título + linha fina). Paywall + Cloudflare.
+  feeds:
+    home:             https://www.ft.com/rss/home/international
+    markets:          https://www.ft.com/markets?format=rss
+    companies:        https://www.ft.com/companies?format=rss
+    global_economy:   https://www.ft.com/global-economy?format=rss
+    emerging_markets: https://www.ft.com/emerging-markets?format=rss
+    brazil:           https://www.ft.com/brazil?format=rss
+    latin_america:    https://www.ft.com/latin-america?format=rss
+    lex:              https://www.ft.com/lex?format=rss
+    unhedged:         https://www.ft.com/unhedged?format=rss
+  section_weights: {home: 0.7, markets: 0.5, companies: 0.4, global_economy: 0.5, emerging_markets: 0.5, brazil: 0.8, latin_america: 0.5, lex: 0.3, unhedged: 0.3}
+  newsletter: FirstFT
+
+nyt:
+  # Feeds oficiais (resumo de ~145 chars). Texto integral só com login (DataDome — frágil); usar API + The Morning.
+  feeds:
+    home:     https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml
+    business: https://rss.nytimes.com/services/xml/rss/nyt/Business.xml
+    economy:  https://rss.nytimes.com/services/xml/rss/nyt/Economy.xml
+    world:    https://rss.nytimes.com/services/xml/rss/nyt/World.xml
+    dealbook: https://rss.nytimes.com/services/xml/rss/nyt/DealBook.xml
+  section_weights: {home: 0.7, business: 0.5, economy: 0.5, world: 0.3, dealbook: 0.4}
+  api: https://api.nytimes.com/svc/topstories/v2/{section}.json   # chave gratuita; ~500 req/dia, 5 req/min
+  newsletter: The Morning
+
+wsj:
+  # Feeds públicos da Dow Jones (resumo de ~120 chars). Paywall + DataDome; sem API para pessoa física.
+  feeds:
+    world:    https://feeds.content.dowjones.io/public/rss/RSSWorldNews
+    markets:  https://feeds.content.dowjones.io/public/rss/RSSMarketsMain
+    business: https://feeds.content.dowjones.io/public/rss/WSJcomUSBusiness
+    economy:  https://feeds.content.dowjones.io/public/rss/socialeconomyfeed
+    politics: https://feeds.content.dowjones.io/public/rss/socialpoliticsfeed
+    opinion:  https://feeds.content.dowjones.io/public/rss/RSSOpinion
+  section_weights: {world: 0.6, markets: 0.6, business: 0.5, economy: 0.5, politics: 0.3, opinion: 0.3}
+  newsletter: The 10-Point
+
+# Newsletters lidas por IMAP (Gmail). `from` é um trecho do remetente; prominence alta porque é curadoria do editor.
+# Assine cada uma com o e-mail do IMAP_USER. Remetentes exatos: confirmar no 1º e-mail recebido.
+newsletters:
+  - {name: "Valor · Edição de hoje",   from: "valor",         source: valor,          market: local, weight: 0.9}
+  - {name: "Valor · Política Hoje",    from: "valor",         source: valor,          market: local, weight: 0.7}
+  - {name: "Brazil Journal",           from: "braziljournal", source: brazil_journal, market: local, weight: 0.8}
+  - {name: "FirstFT",                  from: "ft.com",        source: ft,             market: intl,  weight: 0.8}
+  - {name: "The Morning (NYT)",        from: "nytimes.com",   source: nyt,            market: intl,  weight: 0.7}
+  - {name: "The 10-Point (WSJ)",       from: "wsj.com",       source: wsj,            market: intl,  weight: 0.7}
+
+# ---- Fontes estruturadas do Termômetro DCM (todas públicas, sem login) ---------------------------
+dcm:
+  cvm_ofertas_zip: https://dados.cvm.gov.br/dados/OFERTA/DISTRIB/DADOS/oferta_distribuicao.zip
+  cvm_ofertas_csv: oferta_resolucao_160.csv        # requerimentos de rito automático (RCVM 160) desde 2023, diário
+  cvm_ipe_zip: https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/IPE/DADOS/ipe_cia_aberta_{yyyy}.zip
+  cvm_ipe_categories:                               # Categoria/Tipo/Espécie no CSV do IPE
+    - "Fato Relevante"
+    - "Aviso aos Debenturistas"
+    - "Assembleia"                                  # Tipo AGDEB · Espécie "Edital de Convocação"
+    - "Documentos de Oferta de Distribuição Pública"
+    - "Escrituras e aditamentos de debêntures"   # escritura nova = emissão; aditamento = consent/waiver aprovado
+  cvm_rad_consulta: https://www.rad.cvm.gov.br/ENET/frmConsultaExternaCVM.aspx   # tempo real, UI ASP.NET
+  b3_ofertas_andamento: https://www.b3.com.br/pt_br/produtos-e-servicos/solucoes-para-emissores/ofertas-publicas/ofertas-em-andamento/empresas/publicacao-de-ofertas-publicas/
+  b3_ofertas_encerradas: https://www.b3.com.br/pt_br/produtos-e-servicos/solucoes-para-emissores/ofertas-publicas/ofertas-encerradas/
+  b3_material_facts_api: https://sistemaswebb3-listados.b3.com.br/listedCompaniesProxy/CompanyCall/GetMaterialFacts/{b64json}
+  fnet_json: https://fnet.bmfbovespa.com.br/fnet/publico/pesquisarGerenciadorDocumentosDados?d=0&s=0&l=50&o[0][dataEntrega]=desc   # FIDC/FII
+  anbima_data: https://data.anbima.com.br/busca/debentures              # SPA (headless); debentures.com.br será descontinuado
+  snd_registros_cvm: https://www.debentures.com.br/informacoesaomercado/registronacvm.asp   # HTML, atualizado diariamente
+  snd_agenda_eventos: https://www.debentures.com.br/exploreosnd/consultaadados/eventosfinanceiros/agenda_r.asp  # vencimentos/amortizações (HTML ~50 MB)
+  cvm_476_consulta: https://web.cvm.gov.br/app/esforcosrestritos/#/consultarOferta
+  cvm_rad_listar_json: https://www.rad.cvm.gov.br/ENET/frmConsultaExternaCVM.aspx/ListarDocumentos   # WebMethod JSON não documentado, quase tempo real (fase 3)
+  # B3 · "Declaração de autorização para distribuição (Balcão) – RCVM 160": XLSX com emissor, instrumento, série,
+  # coordenador líder, data de liberação. O href do arquivo muda a cada upload → raspar a página e seguir o link.
+  b3_autorizacao_160_page: https://www.b3.com.br/pt_br/market-data-e-indices/servicos-de-dados/market-data/consultas/boletim-diario/declaracao-de-autorizacao-para-distribuicao-balcao/
+  # Valor RI — sucessor do "Valor Legais" (atas, comunicados, fatos relevantes, avisos de oferta). Renderizado por JS; RSS estagnado.
+  valor_ri: https://valor.globo.com/valor-ri/
+  valor_ri_sections: [atas-e-comunicados, fatos-relevantes, mercado-de-capitais]
+  # Agentes fiduciários — canal primário de convocações de AGD/AGT dos emissores NÃO registrados (SPEs, 476/160 profissional)
+  trustees:
+    vortx:            {events: "https://www.vortx.com.br/investidor/eventos?page={page}", pages: 5, access: html}   # 22k eventos, tabela server-rendered, Status Ativa/Iniciada/Finalizada
+    oliveira_trust:   {events: "https://www.oliveiratrust.com.br/investidor/documentos?documento=Assembleias", access: headless}   # API protegida por reCAPTCHA
+    pentagono:        {events: "https://www.pentagonotrustee.com.br/Site/", access: headless}   # sem seção de assembleias; emissões por ativo
+    simplific_pavarini: {events: "https://www.simplificpavarini.com.br/", access: unknown}       # fora do ar na pesquisa (504); pode ter migrado p/ Vórtx
+  # Jornais de publicidade legal (editais de AGD de SPEs/fechadas): PDF diário → texto → regex "ASSEMBLEIA GERAL DE DEBENTURISTAS"
+  diario_comercial_pdf: "https://diariocomercial.com.br/wp-content/uploads/{yyyy}/{mm}/dcedicaodigital{ddmmyyyy}.pdf"
+  diario_comercial_index: https://www.diariocomercial.com.br/publicidade-legal
+  gazeta_sp_legal: https://publicidadelegal.gazetasp.com.br/       # Cloudflare; PDFs indexados por buscadores
+  cvm_noticias_rss: https://www.gov.br/cvm/pt-br/assuntos/noticias/RSS
+  dcm_keywords_in_news: [debênture, debêntures, CRI, CRA, "nota comercial", "notas comerciais", FIDC, emissão, oferta, "crédito privado", waiver, debenturistas, "resgate antecipado"]
+
+# ---- Feeds extras de mercado (opcionais; desligados por padrão — ligar em settings.extra_news) ----------
+extra_news:
+  neofeed:        https://neofeed.com.br/feed/
+  infomoney:      https://www.infomoney.com.br/feed/
+  moneytimes:     https://www.moneytimes.com.br/feed/
+  suno:           https://www.suno.com.br/noticias/feed/
+  exame_invest:   https://exame.com/invest/feed/
+  einvestidor:    https://einvestidor.estadao.com.br/feed/
+  bloomberg_linea: https://www.bloomberglinea.com.br/rss/category/mercados/?outputType=xml
+  seu_dinheiro:   https://www.seudinheiro.com/feed/
+  monitor_mercantil: https://monitormercantil.com.br/feed/

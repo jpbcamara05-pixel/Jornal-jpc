@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Segredos e sessões de login (NUNCA versionar)
+.env
+secrets/
+browser_profile/
+cookies/
+*.storage_state.json
+
+# Saídas geradas (PDFs, áudios, banco local)
+output/*
+!output/.gitkeep
+data/*.db
+data/*.sqlite
+data/cache/
+logs/
+
+# macOS
+.DS_Store

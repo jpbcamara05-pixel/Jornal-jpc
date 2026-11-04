@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Briefing {{ date }}</title>
+<link rel="stylesheet" href="base.css">
+<style>@page { size: {{ _page.css }}; }</style></head>
+<body class="{{ _page.cls }}">
+{% macro card(c, hero=False) -%}
+<div class="card {{ 'hero' if hero else c.impact }}">
+  <h3><a href="{{ c.url }}">{{ c.title }}</a></h3>
+  <p>{{ c.summary }}</p>
+  <p class="why">{{ c.why_it_matters }}</p>
+  {% if c.brazil_bridge %}<p class="bridge">{{ c.brazil_bridge }}</p>{% endif %}
+  <div class="tags"><span class="tag dir {{ c.direction }}">{{ {'positivo':'▲','negativo':'▼','neutro':'●'}[c.direction] }} {{ c.direction }}</span>
+    <span class="tag">{{ c.source_name }}</span>{% for t in c.tags[:4] %}<span class="tag">{{ t }}</span>{% endfor %}</div>
+</div>
+{%- endmacro %}
+
+<section class="page">
+  <div class="header"><h1>Briefing do Dia</h1><div class="date">{{ date | br_date }} · nº {{ edition_number }}</div></div>
+  <p class="phrase">{{ phrase_of_the_day }}</p>
+  {{ card(headline, hero=True) }}
+  <h2 style="margin-top:5mm">Em 30 segundos</h2>
+  <ul class="bullets">{% for b in in_30_seconds %}<li>{{ b }}</li>{% endfor %}</ul>
+  <div class="read"><h2>Leia hoje</h2><ul style="padding:0;margin:0">
+    {% for r in read_today %}<li><span class="title"><a href="{{ r.url }}">{{ r.title }}</a></span>
+      <span class="muted">· {{ r.source_name }} · {{ r.reading_minutes }} min</span><br>{{ r.why_you_should_read }}</li>{% endfor %}
+  </ul></div>
+  <p class="muted" style="margin-top:4mm">Fontes: {{ sources_consulted | join(', ') }} · {{ articles_processed }} histórias analisadas</p>
+</section>
+
+<section class="page"><h2>Mercado & Empresas</h2><div class="grid">{% for c in mercado_empresas %}{{ card(c) }}{% endfor %}</div></section>
+
+<section class="page"><h2>Economia</h2><div class="grid">{% for c in economia %}{{ card(c) }}{% endfor %}</div>
+  <h2 style="margin-top:6mm">Política</h2><div class="grid">{% for c in politica %}{{ card(c) }}{% endfor %}</div>
+  {% if agenda_do_dia %}<h2 style="margin-top:6mm">Agenda do dia</h2><ul class="bullets">{% for a in agenda_do_dia %}<li>{{ a }}</li>{% endfor %}</ul>{% endif %}
+</section>
+
+<section class="page"><h2>Internacional · o que afeta o Brasil</h2><div class="grid">{% for c in internacional %}{{ card(c) }}{% endfor %}</div></section>
+</body></html>

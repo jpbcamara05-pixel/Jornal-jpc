@@ -1,0 +1,174 @@
+# Taxonomia e score do Termômetro DCM.
+# Camada 1: palavras-chave (alto recall) selecionam documentos candidatos.
+# Camada 2: o LLM classifica em família/subtipo e extrai valor, data, tipo de fonte, evidência literal.
+# Camada 3: o código pontua (briefing/summarize/dcm_score.py) com os pesos de `scoring`.
+# Frequências entre parênteses = ocorrências reais no campo "Assunto" do IPE/CVM em 2026 (jan–out),
+# evidência de quais termos aparecem de fato nos documentos.
+
+signals:
+  nova_emissao:                      # família A — originação
+    label: Nova emissão
+    base_default: 15
+    subtypes:
+      rca_aprova_emissao:
+        base: 25
+        keywords: ["aprova a emissão", "aprovou a emissão", "aprova emissão", "aprovação da emissão", "reunião do conselho de administração", "RCA", "escritura de emissão", "termo de emissão de nota comercial"]
+      oferta_em_curso:               # bookbuilding, aviso ao mercado, anúncio de início (RCVM 160 "Aguardando Bookbuilding")
+        base: 15
+        keywords: ["anúncio de início", "aviso ao mercado", "bookbuilding", "procedimento de bookbuilding", "período de reserva", "coordenador líder", "garantia firme", "aguardando bookbuilding", "registro concedido"]
+      captacao_anunciada:            # "emissão de debêntures" (54 FR / 104 CM), "oferta pública" (72 FR)
+        base: 25
+        keywords: ["anuncia emissão", "emissão de debêntures", "notas comerciais", "oferta pública", "oferta de CRI", "oferta de CRA", "capta R$", "captação de R$", "emissão de bonds", "senior notes", "debêntures incentivadas", "Lei 12.431", "FIDC"]
+      encerramento_oferta:           # contexto / relacionamento, não oportunidade nova
+        base: 5
+        keywords: ["anúncio de encerramento", "liquidação financeira da oferta", "encerramento da oferta"]
+
+  refinanciamento:                   # família B — liability management
+    label: Refinanciamento / liability management
+    base_default: 20
+    subtypes:
+      resgate_antecipado:            # 82 avisos aos debenturistas em 2026
+        base: 30
+        keywords: ["resgate antecipado", "resgate antecipado facultativo", "oferta de resgate antecipado", "amortização extraordinária", "recompra", "programa de aquisição facultativa", "pré-pagamento", "liquidação antecipada", "tender offer", "cancelamento de debêntures"]
+      alongamento_rolagem:
+        base: 30
+        keywords: ["alongamento", "alongar a dívida", "rolagem", "refinanciamento", "refinanciar", "oferta de troca", "exchange offer", "liability management", "alteração do prazo", "alteração da data de vencimento", "nova emissão para resgate"]
+      muro_vencimentos:              # derivado: Data_Vencimento (CSV CVM) / agenda SND em 6–18 meses
+        base: 30
+        keywords: ["vencimento em 2026", "vencimento em 2027", "vence em", "vencimento das debêntures", "vencimento do bond"]
+      pressao_liquidez:
+        base: 25
+        keywords: ["renegociação com credores", "standstill", "stand-still", "carência", "waiver de pagamento", "postergação do pagamento"]
+
+  consent_waiver:                    # família C — AGD, waiver, reestruturação
+    label: Consent / waiver / reestruturação
+    base_default: 25
+    subtypes:
+      agd_convocada:                 # 276 editais AGDEB em 2026
+        base: 35
+        keywords: ["edital de convocação", "AGD", "assembleia geral de debenturistas", "assembleia geral de titulares", "AGT", "consulta formal", "segunda convocação", "reabertura", "convoca os debenturistas"]
+      waiver_covenant:               # "waiver" (24 CM), "repactuação" (5), "aditamento" (11)
+        base: 35
+        keywords: ["waiver", "perdão temporário", "dispensa temporária", "não declaração do vencimento antecipado", "sustação dos efeitos do vencimento antecipado", "repactuação", "renegociação de covenants", "índice financeiro", "índice de cobertura", "dívida líquida/EBITDA", "alteração da escritura", "aditamento", "reforço de garantias", "substituição do agente fiduciário", "prêmio de consentimento", "consent fee"]
+      deterioracao:
+        base: 30
+        keywords: ["descumprimento de covenant", "inadimplemento", "evento de inadimplemento", "vencimento antecipado", "termo de não instalação"]
+      reestruturacao_formal:         # RE (33 FR) / RJ (23 FR) em 2026
+        base: 30
+        keywords: ["recuperação extrajudicial", "recuperação judicial", "plano de recuperação", "acordo com credores", "mediação com credores", "homologação do plano"]
+
+  gatilho_funding:                   # família D — indicadores antecedentes
+    label: Gatilho de funding (M&A, capex, leilão, concessão)
+    base_default: 20
+    subtypes:
+      aquisicao_mna:                 # "aquisição" (120 FR), "alienação" (54)
+        base: 25
+        keywords: ["aquisição", "adquire", "compra de participação", "contrato de compra e venda", "fechamento da operação", "financiamento da aquisição", "bridge loan", "fusão", "incorporação de ações"]
+      capex_projeto:                 # "leilão" (33 FR), "concessão" (19)
+        base: 25
+        keywords: ["plano de investimentos", "capex", "investimento de R$", "investir R$", "leilão", "arrematou", "vencedora do leilão", "concessão", "contrato de concessão", "PPP", "licença de instalação", "financiamento do BNDES", "nova planta", "expansão"]
+      evento_societario:
+        base: 15
+        keywords: ["IPO", "follow-on", "cisão", "spin-off", "dividendo extraordinário", "redução de capital", "OPA"]
+
+  evento_credito:                    # família E — rating e crédito
+    label: Evento de crédito (rating, alavancagem)
+    base_default: 15
+    subtypes:
+      rebaixamento_rating:           # "rating" (14 FR / 106 CM), Fitch (36), Moody's (20)
+        base: 20
+        keywords: ["rebaixa", "rebaixamento", "perspectiva negativa", "observação negativa", "watch negativo", "revisão para rebaixamento"]
+      elevacao_rating:
+        base: 15
+        keywords: ["eleva a nota", "elevação do rating", "perspectiva positiva", "upgrade"]
+      rating_afirmado:
+        base: 5
+        keywords: ["afirma o rating", "afirmação do rating", "rating atribuído", "AAA(bra)", "brAAA", "escala nacional"]
+      alavancagem_inadimplencia:
+        base: 20
+        keywords: ["alavancagem", "inadimplência", "atraso no pagamento", "default", "calote", "reestruturação da dívida", "estresse financeiro"]
+
+  macro_regulatorio:                 # família F — contexto
+    label: Macro e regulatório
+    base_default: 10
+    subtypes:
+      fluxo_spread:
+        base: 10
+        keywords: ["crédito privado", "spread", "captação líquida", "resgates em fundos", "fundos de crédito", "prêmio de crédito"]
+      regulacao:
+        base: 10
+        keywords: ["incentivadas", "isenção", "tributação de", "CMN", "Resolução CVM", "RCVM 160", "ANBIMA", "Lei 14.801", "debêntures de infraestrutura"]
+      juros:
+        base: 5
+        keywords: ["Selic", "Copom", "curva de juros", "NTN-B", "DI futuro"]
+
+# Documentos com estes termos no título são ruído (não oportunidade)
+exclusions:
+  - "pagamento de juros"
+  - "pagamento de remuneração"
+  - "pagamento da remuneração"
+  - "posição consolidada"
+  - "relatório proventos"
+  - "mapa de votação"
+  - "manual para participação"
+  - "manual de participação"
+  - "relatório anual do agente fiduciário"
+  - "calendário de eventos corporativos"
+  - "boletim de voto"
+
+# Setores com emissão recorrente (modificador +5 no score)
+priority_sectors:
+  - energia
+  - saneamento
+  - rodovia
+  - concess
+  - logística
+  - porto
+  - telecom
+  - óleo
+  - gás
+  - agro
+  - varejo
+  - saúde
+  - educação
+  - incorpora
+  - construção
+  - financeira
+  - locação
+
+# ---------------------------------------------------------------- score (dcm_score.py)
+scoring:
+  # urgência pela data do evento: [dias até o evento (≤), pontos] — primeira faixa que casar
+  urgency_days: [[7, 20], [30, 12], [180, 20], [365, 14], [540, 8]]
+  # tamanho: [valor mínimo em R$, pontos] — primeira faixa que casar (ordem decrescente)
+  size_brl: [[1000000000, 15], [300000000, 10], [100000000, 6], [0, 2]]
+  # confiança da fonte (0–15), multiplicada pela confiança da extração
+  source_points:
+    documento_oficial: 15
+    trustee: 13
+    jornal_legal: 12
+    imprensa_principal: 10
+    outra_midia: 6
+    rumor: 4
+  confidence_multiplier: {alta: 1.0, media: 0.7, baixa: 0.4}
+  corroboration_points: 5
+  corroboration_max: 10
+  modifiers:
+    priority_sector: 5
+    refinancing_destination: 5     # "destinação: refinanciamento/reembolso/resgate da Xª emissão"
+    repeated_convocation: 5        # 2ª convocação / reabertura = dificuldade de quórum/negociação
+    macro_penalty: -10
+  half_life_business_days: 7
+  bands: {frio: 0, morno: 20, aquecendo: 40, quente: 60, fervendo: 80}
+  human_review_threshold: 40       # ≥ aquecendo: vale olhar; ≥ quente: contato na semana; fervendo: hoje
+
+# Texto injetado no system prompt do LLM (mantenha curto e alinhado aos subtipos acima)
+prompt_summary: |
+  nova_emissao: rca_aprova_emissao · oferta_em_curso · captacao_anunciada · encerramento_oferta
+  refinanciamento: resgate_antecipado · alongamento_rolagem · muro_vencimentos · pressao_liquidez
+  consent_waiver: agd_convocada · waiver_covenant · deterioracao · reestruturacao_formal
+  gatilho_funding: aquisicao_mna · capex_projeto · evento_societario
+  evento_credito: rebaixamento_rating · elevacao_rating · rating_afirmado · alavancagem_inadimplencia
+  macro_regulatorio: fluxo_spread · regulacao · juros
+  Setores prioritários: energia, saneamento, concessões/rodovias, logística/portos, telecom, óleo e gás,
+  agro, varejo, saúde, educação, incorporação/construção, financeiras, locação.
