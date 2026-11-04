@@ -17,8 +17,11 @@ docker run -d --name waha --restart unless-stopped \
   -v waha_sessions:/app/.sessions \
   -e WHATSAPP_DEFAULT_ENGINE=NOWEB \
   -e WAHA_API_KEY="$WAHA_API_KEY" \
+  -e WAHA_DASHBOARD_USERNAME=admin -e WAHA_DASHBOARD_PASSWORD="$WAHA_API_KEY" \
+  -e WHATSAPP_SWAGGER_USERNAME=admin -e WHATSAPP_SWAGGER_PASSWORD="$WAHA_API_KEY" \
   -e WHATSAPP_RESTART_ALL_SESSIONS=True \
   "$IMAGE"
 
-echo "WAHA no ar: http://localhost:3000  (Swagger: /  · QR da sessão: POST /api/sessions/default/start e GET /api/default/auth/qr)"
+echo "WAHA no ar. Painel: http://localhost:3000/dashboard  (usuário admin · senha = WAHA_API_KEY do .env)"
+echo "QR para o chip reserva: scripts/waha_qr.sh  (ou no painel, sessão 'default')"
 echo "Teste: python -m briefing test-delivery   →   python -m briefing test-delivery --sample"
